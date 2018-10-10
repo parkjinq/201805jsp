@@ -1,0 +1,30 @@
+<%@ page language="java" contentType="application/vnd.ms-excel; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+<%	response.setHeader("Content-Disposition", "attachment; filename=excel.xls");
+	
+%>
+ 
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>excel.jsp</title>
+</head>
+<body>
+	<table border="1">
+		<tr>
+			<th>userId</th>
+			<th>userName</th>
+		</tr>
+		<tr>
+			<td>brown</td>
+			<td>브라운</td>
+		</tr>
+		<tr>
+			<td>sally</td>
+			<td>샐리</td>
+		</tr>
+	</table>
+</body>
+</html>
