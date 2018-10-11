@@ -1,7 +1,5 @@
 package kr.or.ddit.user.model;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class UserVO {
@@ -14,6 +12,24 @@ public class UserVO {
 	private String email;
 	private String tel;
 	private Date birth;
+	private String rnum;
+	private String profile;
+
+	public String getProfile() {
+		return profile;
+	}
+
+	public void setProfile(String profile) {
+		this.profile = profile;
+	}
+
+	public String getRnum() {
+		return rnum;
+	}
+
+	public void setRnum(String rnum) {
+		this.rnum = rnum;
+	}
 
 	public UserVO() {
 	}

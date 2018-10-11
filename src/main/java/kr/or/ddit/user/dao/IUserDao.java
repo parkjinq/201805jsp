@@ -49,4 +49,14 @@ public interface IUserDao {
 	* Method 설명 : pageVO조건에 맞는 양의 UserVO리스트를 반환한다.
 	 */
 	public List<UserVO> selectUserPageList(PageVO pageVO);
+	
+	/**
+	 * 
+	* Method : getUserCnt
+	* 작성자 : jin
+	* 변경이력 :
+	* @return 전체 유저수 int형 숫자
+	* Method 설명 : DB에 있는 전체 유저 수 반환하는 메서드
+	 */
+	public int getUserCnt();
 }

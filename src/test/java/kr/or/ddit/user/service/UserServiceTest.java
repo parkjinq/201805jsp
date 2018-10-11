@@ -5,8 +5,12 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
+import java.util.Map;
 
+import kr.or.ddit.user.dao.IUserDao;
+import kr.or.ddit.user.dao.UserDao;
 import kr.or.ddit.user.model.UserVO;
+import kr.or.ddit.util.model.PageVO;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -17,6 +21,7 @@ import org.junit.Test;
 public class UserServiceTest {
 	
 	private String userId = "brown";
+	private String pass = "brownpass";
 	private IUserService service;
 	
 	//				JUNIT 실행주기
@@ -75,7 +80,7 @@ public class UserServiceTest {
 		System.out.println(userList);
 
 		/*** Then : 결과가 어떠해야하는지 정의 ***/
-		assertEquals(5, userList.size());
+		assertEquals(105, userList.size());
 	}
 
 	@Test
@@ -104,6 +109,7 @@ public class UserServiceTest {
 		
 		UserVO userVo = new UserVO();
 		userVo.setUserId(userId);
+		userVo.setPass(pass);
 
 		/*** When ***/
 		user = service.selectUserByVo(userVo);
@@ -115,5 +121,37 @@ public class UserServiceTest {
 		assertEquals("brown", user.getUserId());
 		assertNotEquals("샐리", user.getName());
 		assertNotNull(user);
+	}
+	
+	@Test
+	public void selectUserPageList() {
+		/*** Given ***/
+		PageVO pageVO = new PageVO(5, 10);
+		
+		/*** When ***/
+		Map<String, Object> resultMap = service.selectUserPageList(pageVO);
+		List<UserVO> userList = (List<UserVO>) resultMap.get("userList");
+		int pageCnt = (int) resultMap.get("pageCnt");
+		System.out.println("\n- selectUserPageList()");
+		System.out.println(userList);
+		
+		/*** Then ***/
+		assertEquals(10, userList.size());
+		assertEquals(11, pageCnt);
+	}
+	
+	@Test
+	public void getUserCnt() {
+		/*** Given ***/
+		int userCnt;
+		
+		/*** When ***/
+		userCnt = service.getUserCnt();
+		
+		System.out.println("\n- getUserCnt()");
+		System.out.println(userCnt);
+		
+		/*** Then ***/
+		assertEquals(105, userCnt);
 	}
 }

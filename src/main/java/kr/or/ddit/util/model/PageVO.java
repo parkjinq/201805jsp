@@ -4,8 +4,6 @@ public class PageVO {
 	private int page;		//페이지 번호
 	private int pageSize;	//페이지 한페이지당 row 개수
 	
-	
-	
 	public PageVO() {}
 	
 	public PageVO(int page, int pageSize) {

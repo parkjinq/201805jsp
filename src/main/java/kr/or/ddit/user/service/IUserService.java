@@ -1,6 +1,7 @@
 package kr.or.ddit.user.service;
 
 import java.util.List;
+import java.util.Map;
 
 import kr.or.ddit.user.model.UserVO;
 import kr.or.ddit.util.model.PageVO;
@@ -45,9 +46,19 @@ public interface IUserService {
 	* 작성자 : jin
 	* 변경이력 :
 	* @param pageVO
-	* @return 페이징에 맞는 UserVO리스트
-	* Method 설명 : pageVO조건에 맞는 양의 UserVO리스트를 반환한다.
+	* @return Map<String, Object> / UserVO리스트와 전체 유저수(int)
+	* Method 설명 : pageVO조건에 맞는 양의 UserVO리스트와 전체 유저수(int) Map에 담아 반환한다.
 	 */
-	public List<UserVO> selectUserPageList(PageVO pageVO);
+	public Map<String, Object> selectUserPageList(PageVO pageVO);
+	
+	/**
+	 * 
+	* Method : getUserCnt
+	* 작성자 : jin
+	* 변경이력 :
+	* @return 전체 유저수 int형 숫자
+	* Method 설명 : DB에 있는 전체 유저 수 반환하는 메서드
+	 */
+	public int getUserCnt();
 	
 }

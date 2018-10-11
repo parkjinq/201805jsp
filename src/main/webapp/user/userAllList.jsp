@@ -25,11 +25,7 @@
 <body>
 	<%
 		List<UserVO> userList = (List<UserVO>) request.getAttribute("userList");
-		List<UserVO> userListPage = (List<UserVO>) request.getAttribute("userListPage");
-		PageVO pagination = (PageVO)request.getAttribute("pagination");
-		
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd");
-		int count = userList.size();
 	%>
 
 	<%@ include file="/common/header.jsp"%>
@@ -43,7 +39,7 @@
 
 				<div class="row">
 					<div class="col-sm-8 blog-main">
-				userAllList.jsp
+						userAllList.jsp
 						<h2 class="sub-header">사용자 리스트</h2>
 						<div class="table-responsive">
 							<table class="table table-striped">
@@ -54,19 +50,17 @@
 									<th>생년월일</th>
 								</tr>
 								<%
-									for (UserVO user : userListPage) {
+									for (UserVO user : userList) {
 								%>
 								<tr>
-									<td><%=count--%></td>
+									<td><%=user.getRnum()%></td>
 									<td><%=user.getUserId()%></td>
 									<td><%=user.getName()%></td>
 									<td><%=formatter.format(user.getBirth())%></td>
 								</tr>
-
 								<%
 									}
 								%>
-
 							</table>
 						</div>
 
@@ -74,19 +68,7 @@
 
 						<div class="text-center">
 							<ul class="pagination">
-										<li><a href="#" ><</a></li>
-								<%
-									int pageSize = pagination.getPageSize();
-									int pageNum = pagination.getPage();
-									int paginationNum = 10;
-
-									for (int i = pageNum; i < pageNum + paginationNum; i++) {
-								%>
-										<li><a href="/userAllList" ><%=i%></a></li>
-								<%
-									}
-								%>
-										<li><a href="#" >></a></li>
+								<li><a href="/userAllList?pageNum=1">1</a></li>
 							</ul>
 						</div>
 					</div>

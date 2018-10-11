@@ -1,6 +1,8 @@
 package kr.or.ddit.user.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import kr.or.ddit.user.dao.IUserDao;
 import kr.or.ddit.user.dao.UserDao;
@@ -30,9 +32,27 @@ public class UserService implements IUserService{
 	}
 
 	@Override
-	public List<UserVO> selectUserPageList(PageVO pageVO) {
-		List<UserVO> list = dao.selectUserPageList(pageVO);
-		return list;
+	public Map<String, Object> selectUserPageList(PageVO pageVO) {
+		
+		//페이지에 해당하는 유저리스트 조회
+		List<UserVO> userList = dao.selectUserPageList(pageVO);
+		
+		//페이지 네비게이션을 위한 전체 유저수 조회
+		int userCnt = dao.getUserCnt();
+		
+		
+		
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("userList", userList);
+		resultMap.put("pageCnt", (int) (Math.ceil((double)userCnt / pageVO.getPageSize())));
+		
+		return resultMap;
+	}
+
+	@Override
+	public int getUserCnt() {
+		int userCnt = dao.getUserCnt();
+		return userCnt;
 	}
 
 }

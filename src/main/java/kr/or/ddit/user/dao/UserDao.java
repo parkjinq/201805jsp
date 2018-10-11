@@ -16,7 +16,12 @@ public class UserDao implements IUserDao{
 		SqlSessionFactory factory = SqlFactoryBuilder.getSqlSessionFactory();
 		SqlSession session = factory.openSession();
 
-		return session.selectList("user.selectUserAll");
+		List<UserVO> userList = session.selectList("user.selectUserAll");
+//		session.rollback();
+//		session.commit();
+		session.close();
+		
+		return userList;
 	}
 
 	public UserVO selectUser(String userId) {
@@ -24,7 +29,10 @@ public class UserDao implements IUserDao{
 		SqlSessionFactory factory = SqlFactoryBuilder.getSqlSessionFactory();
 		SqlSession session = factory.openSession();
 
-		return session.selectOne("user.selectUser", userId);
+		UserVO user = session.selectOne("user.selectUser", userId);
+		session.close();
+		
+		return user;
 	}
 
 	public UserVO selectUserByVo(UserVO userVO) {
@@ -32,7 +40,10 @@ public class UserDao implements IUserDao{
 		SqlSessionFactory factory = SqlFactoryBuilder.getSqlSessionFactory();
 		SqlSession session = factory.openSession();
 
-		return session.selectOne("user.selectUserByVo", userVO);
+		UserVO user = session.selectOne("user.selectUserByVo", userVO);
+		session.close();
+		
+		return user;
 	}
 
 	@Override
@@ -40,7 +51,21 @@ public class UserDao implements IUserDao{
 		SqlSessionFactory factory = SqlFactoryBuilder.getSqlSessionFactory();
 		SqlSession session = factory.openSession();
 
-		return session.selectList("user.selectUserPageList", pageVO);
+		List<UserVO> userList = session.selectList("user.selectUserPageList", pageVO);
+		session.close();
+		
+		return userList;
+	}
+
+	@Override
+	public int getUserCnt() {
+		SqlSessionFactory factory = SqlFactoryBuilder.getSqlSessionFactory();
+		SqlSession session = factory.openSession();
+
+		int userCnt = session.selectOne("user.getUserCnt");
+		session.close();
+		
+		return userCnt;
 	}
 
 }

@@ -6,7 +6,7 @@
 
 	<select id="selectUserAll" resultType="userVo">
 <!-- 		SELECT rownum as rnum, jspuser.* FROM jspuser -->
-		SELECT jspuser.* FROM jspuser
+		SELECT ROWNUM rnum, jspuser.* FROM jspuser
 	</select>
 
 	<select id="selectUser" parameterType="String" resultType="userVo">
@@ -18,11 +18,16 @@
 	</select>
 	
 	<select id="selectUserPageList" parameterType="pageVo" resultType="userVo">
-		SELECT  u.*
-		FROM    (   SELECT  ROWNUM rnum, jspuser.*
-		            FROM    jspuser
-		            ORDER BY    userId) u
-		WHERE   u.rnum BETWEEN (${page})*(${pageSize})-(${pageSize}-1) AND (${page})*(${pageSize})
+		SELECT *
+		FROM    (SELECT ROWNUM runm, a.*
+		        FROM    (SELECT  ROWNUM rnum, jspuser.*
+		                FROM    jspuser
+		                ORDER BY    userId) a)
+		WHERE   rnum BETWEEN (${page})*(${pageSize})-(${pageSize}-1) AND (${page})*(${pageSize})
 	</select>
 
+	<select id="getUserCnt" resultType="int">
+		SELECT count(*) FROM jspuser
+	</select>
+	
 </mapper>
