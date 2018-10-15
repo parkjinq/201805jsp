@@ -31,6 +31,40 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
+    
+    <script src="/js/jquery-3.3.1.min.js"></script>
+ 	
+ <script type="text/javascript">
+ 	function getCookie(cookieName) {
+ 		var cookieStr = document.cookie
+ 		var cookieList = cookieStr.split("; ");
+		var resultStr = null;
+		
+		for(var i = 0; i < cookieList.length; i++){
+			if(cookieList[i].startsWith(cookieName + "=")){
+				resultStr = cookieList[i].substring((cookieName + "=").length);
+				break;
+			}
+		}
+		
+		return resultStr;
+	}
+ 	
+ 	$('document').ready(function() {
+ 		console.log("test");
+		 	var userId = getCookie("userId");
+	 	if(getCookie("remember") == "Y"){
+		 	$("#userId").val(userId);
+		 	$("#remember-me").attr("checked", true);	//						  checked/unchecked
+		 	$("#remember-me").prop("checked", true);	//attr이랑 조금 다름 구글링 해봐 , true/false
+	 	} else {
+		 	$("#remember-me").attr("checked", false);
+	 	}
+	});
+ 	
+ </script>
+ 
   </head>
 
   <body>
@@ -40,13 +74,13 @@
       <form class="form-signin" method="post" action="/dditLogin">
         <h2 class="form-signin-heading">Please sign in</h2>
         <label for="inputEmail" class="sr-only">Id address</label>
-        <input type="text" id="inputEmail" class="form-control" placeholder="아이디" required autofocus name="user_id" value="brown" >
+        <input type="text" id="userId" class="form-control" placeholder="아이디" required autofocus name="user_id">
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="비밀번호" required name="user_pw" value="brownpass">
+        <input type="password" id="inputPassword" class="form-control" placeholder="비밀번호" required name="user_pw">
         <div class="checkbox">
-<!--           <label> -->
-<!--             <input type="checkbox" value="remember-me"> Remember me -->
-<!--           </label> -->
+          <label>
+            <input type="checkbox" id="remember-me" name="remember-me" value="remember-me" > Remember me
+          </label>
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
       </form>

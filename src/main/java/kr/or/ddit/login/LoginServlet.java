@@ -6,6 +6,7 @@ import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,6 +41,35 @@ public class LoginServlet extends HttpServlet{
 		//1.
 		String userId = req.getParameter("user_id");
 		String password = req.getParameter("user_pw");
+		String rememberMe = req.getParameter("remember-me");
+
+		//아이디 기억
+		if(rememberMe == null){
+//			Cookie cookie = new Cookie("remember", "N");
+//			Cookie useridCookie = new Cookie("userId", userId);
+//			cookie.setMaxAge(60*60*24);
+//			cookie.setMaxAge(-1); //음수로 하면 쿠키가 유효화 되며 사라짐
+//			resp.addCookie(cookie);
+//			resp.addCookie(useridCookie);
+			
+			Cookie[] cookies = req.getCookies();
+			for(Cookie cookie : cookies){
+				if(cookie.getName().equals("userId")){
+					cookie.setMaxAge(0); // 0 : 바로삭제, -1 : 브라우저 재시작시 쿠키삭제 반영
+					resp.addCookie(cookie);
+				} else if(cookie.getName().equals("remember")){
+					cookie.setMaxAge(0);
+					resp.addCookie(cookie);
+				}
+				System.out.println(cookie.getName());
+			}
+		} else {
+			//response 객체에 저장
+			Cookie cookie = new Cookie("remember", "Y");
+			Cookie useridCookie = new Cookie("userId", userId);
+			resp.addCookie(cookie);
+			resp.addCookie(useridCookie);
+		}
 		
 		//2. > db대신 상수로 대체
 		

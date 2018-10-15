@@ -17,4 +17,24 @@ public class StringUtil {
 		}
 		return profile;
 	}
+
+	public static String getCookie(String cookieString, String name) {
+
+		String[] cookieList = cookieString.split("; ");
+		String resultStr = null;
+		
+		for(String str : cookieList){
+			String[] strList = str.split("=");
+//			if(strList[0].equals(name)){
+//				resultStr = strList[1];
+//				break;
+//			}
+			if(str.startsWith(name + "=")){
+				resultStr = strList[1];
+				break;
+			}
+		}
+		
+		return resultStr;
+	}
 }
