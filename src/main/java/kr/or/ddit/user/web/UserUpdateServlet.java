@@ -34,6 +34,8 @@ public class UserUpdateServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		request.setCharacterEncoding("utf-8");
+		
 		IUserService userService = new UserService();
 		
 		UserVO userVO = new UserVO();
@@ -53,44 +55,54 @@ public class UserUpdateServlet extends HttpServlet {
 		userVO.setTel(request.getParameter("tel"));
 		
 		Part profilePart = request.getPart("profile");
-		System.out.println("profilePart" + profilePart);
+		System.out.println("profilePart : " + profilePart);
 		//수정후 파일 저장
 		String contentDisposition = profilePart.getHeader("Content-disposition");
 		String profile = StringUtil.stringUtil(contentDisposition);
 		String path = getServletContext().getRealPath("/profile");
-		System.out.println("profile" + profile);
+		System.out.println("profile : " + profile);
 		if(!(profile.equals(""))){
 			profilePart.write(path + File.separator + profile);
+			System.out.println("profilePart.write : " + path + File.separator + profile);
 			profilePart.delete();
 			userVO.setProfile("profile/" + profile);
 			
 			String aa = request.getParameter("existingProfile");
-			aa = aa.split("/")[1];
-			String pathpath = path + File.separator + aa;
-//			pathpath.replaceAll("/", "\\");
-			
-//			File file = new File(path + File.separator + request.getParameter("existingProfile"));
-			File file = new File(pathpath);
-			if(file.exists()){ //파일존재여부
-				if(file.isDirectory()){
-					
-					File[] files = file.listFiles();
-	                 
-	                for( int i=0; i<files.length; i++){
-	                    if( files[i].delete() ){
-	                        System.out.println(files[i].getName()+" 삭제성공");
-	                    }else{
-	                        System.out.println(files[i].getName()+" 삭제실패");
-	                    }
-	                }
-				}
-				if(file.delete()){
-					System.out.println("기존 file 삭제 완료");
+			System.out.println("aa : " + aa);
+			if (!(aa == null)) {
+
+				aa = aa.split("/")[1];
+				String pathpath = path + File.separator + aa;
+				// pathpath.replaceAll("/", "\\");
+
+				System.out.println("기존 프로파일이 존재하는 경우에 들어오는 부분");
+				
+				// File file = new File(path + File.separator +
+				// request.getParameter("existingProfile"));
+				File file = new File(pathpath);
+				if (file.exists()) { // 파일존재여부
+					if (file.isDirectory()) {
+
+						File[] files = file.listFiles();
+
+						for (int i = 0; i < files.length; i++) {
+							if (files[i].delete()) {
+								System.out
+										.println(files[i].getName() + " 삭제성공");
+							} else {
+								System.out
+										.println(files[i].getName() + " 삭제실패");
+							}
+						}
+					}
+					if (file.delete()) {
+						System.out.println("기존 file 삭제 완료");
+					} else {
+						System.out.println("기존 file 삭제 실패");
+					}
 				} else {
-					System.out.println("기존 file 삭제 실패");
+					System.out.println("기존 file이 존재하지 않음");
 				}
-			} else {
-				System.out.println("기존 file이 존재하지 않음");
 			}
 		} else {
 			profile = request.getParameter("existingProfile");
