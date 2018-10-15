@@ -68,4 +68,41 @@ public class UserDao implements IUserDao{
 		return userCnt;
 	}
 
+	@Override
+	public int insertUser(UserVO userVO) {
+		SqlSessionFactory factory = SqlFactoryBuilder.getSqlSessionFactory();
+		SqlSession session = factory.openSession();
+
+		int insertCnt = session.insert("user.insertUser", userVO);
+		session.commit();//데이터가 확정이 되니까 필요
+		session.close();
+		
+		return insertCnt;
+	}
+
+	@Override
+	public int deleteUser(String userId) {
+		SqlSessionFactory factory = SqlFactoryBuilder.getSqlSessionFactory();
+		SqlSession session = factory.openSession();
+
+		int deleteCnt = session.delete("user.deleteUser", userId);
+		session.commit();//데이터가 확정이 되니까 필요
+		session.close();
+		
+		return deleteCnt;
+	}
+
+	@Override
+	public int updateUser(UserVO userVO) {
+		SqlSessionFactory factory = SqlFactoryBuilder.getSqlSessionFactory();
+		SqlSession session = factory.openSession();
+		
+		int updateCnt = session.update("user.updateUser", userVO);
+		
+		session.commit();//데이터가 확정이 되니까 필요
+		session.close();
+		
+		return updateCnt;
+	}
+
 }

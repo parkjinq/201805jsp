@@ -61,4 +61,36 @@ public interface IUserService {
 	 */
 	public int getUserCnt();
 	
+	/**
+	 * 
+	* Method : insertUser
+	* 작성자 : jin
+	* 변경이력 :
+	* @param userVO
+	* @return
+	* Method 설명 : 사용자 등록
+	 */
+	public int insertUser(UserVO userVO);
+	
+	/**
+	 * 
+	* Method : deleteUSer
+	* 작성자 : jin
+	* 변경이력 :
+	* @param userId
+	* @return
+	* Method 설명 : 사용자 삭제
+	 */
+	public int deleteUSer(String userId);
+	
+	/**
+	 * 
+	* Method : updateUser
+	* 작성자 : jin
+	* 변경이력 :
+	* @param userVO
+	* @return
+	* Method 설명 : 사용자 정보 수정
+	 */
+	public int updateUser(UserVO userVO);
 }

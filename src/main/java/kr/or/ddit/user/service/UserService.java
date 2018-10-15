@@ -55,4 +55,22 @@ public class UserService implements IUserService{
 		return userCnt;
 	}
 
+	@Override
+	public int insertUser(UserVO userVO) {
+		int insertCnt = dao.insertUser(userVO);
+		return insertCnt;
+	}
+
+	@Override
+	public int deleteUSer(String userId) {
+		int deleteCnt = dao.deleteUser(userId);
+		return deleteCnt;
+	}
+
+	@Override
+	public int updateUser(UserVO userVO) {
+		int updateCnt = dao.updateUser(userVO);
+		return updateCnt;
+	}
+
 }

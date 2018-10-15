@@ -59,4 +59,37 @@ public interface IUserDao {
 	* Method 설명 : DB에 있는 전체 유저 수 반환하는 메서드
 	 */
 	public int getUserCnt();
+	
+	/**
+	 * 
+	* Method : insertUser
+	* 작성자 : jin
+	* 변경이력 :
+	* @param userVO
+	* @return
+	* Method 설명 : 사용자 등록
+	 */
+	public int insertUser(UserVO userVO);
+	
+	/**
+	 * 
+	* Method : deleteUser
+	* 작성자 : jin
+	* 변경이력 :
+	* @param userId
+	* @return
+	* Method 설명 : 사용자 삭제
+	 */
+	public int deleteUser(String userId);
+	
+	/**
+	 * 
+	* Method : updateUser
+	* 작성자 : jin
+	* 변경이력 :
+	* @param userVO
+	* @return
+	* Method 설명 : 사용자 정보 수정
+	 */
+	public int updateUser(UserVO userVO);
 }

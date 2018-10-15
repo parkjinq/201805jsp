@@ -26,13 +26,29 @@
 
 <%@ include file="/common/basicLib.jsp"%>
 
-</head>
-
-<body>
 	<%
 		UserVO userVo = (UserVO)request.getAttribute("userVO");
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd");
 	%>
+<script type="text/javascript">
+	$(document).ready(function() {
+
+		var ev = "click";
+		
+		$(".updateClick").on(ev, function() {
+			console.log("document.ready");
+			$("#uu").submit();
+		});
+	});
+</script>
+
+</head>
+
+<form id="uu" action="/userUpdate" method="get">
+	<input type="hidden" id="userId" name="userId" value="<%=userVo.getUserId() %>">
+</form>
+
+<body>
 
 	<%@ include file="/common/header.jsp"%>
 
@@ -43,7 +59,7 @@
 
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
-				<form class="form-horizontal" role="form">
+				<form class="form-horizontal" role="form" action="/userPageList" method="get">
 					<div class="form-group">
 						<label for="userNm" class="col-sm-2 control-label">사용자 사진</label>
 						<div class="col-sm-10">
@@ -63,8 +79,7 @@
 					<div class="form-group">
 						<label for="userNm" class="col-sm-2 control-label">사용자 아이디</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="userId" name="userId"
-								placeholder="사용자 아이디" value="<%=userVo.getUserId() %>">
+								<label class="control-label" id="userId" ><%=userVo.getUserId() %></label>
 						</div>
 					</div>
 
@@ -78,53 +93,50 @@
 					<div class="form-group">
 						<label for="userNm" class="col-sm-2 control-label">주소</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="addr1" name="addr1"
-								placeholder="주소" value="<%=userVo.getAddr1() %>">
+								<label class="control-label" ><%=userVo.getAddr1() %></label>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="userNm" class="col-sm-2 control-label">상세주소</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="addr2"
-								name="addr2" placeholder="상세주소" value="<%=userVo.getAddr2() %>">
+								<label class="control-label" ><%=userVo.getAddr2() %></label>
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label for="userNm" class="col-sm-2 control-label">우편번호</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="zipcd"
-								name="zipcd" placeholder="우편번호" value="<%=userVo.getZipcd() %>">
+								<label class="control-label" ><%=userVo.getZipcd() %></label>
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label for="userNm" class="col-sm-2 control-label">생년월일</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="birth"
-								name="birth" placeholder="생년월일" value="<%=formatter.format(userVo.getBirth()) %>">
+								<label class="control-label" ><%=formatter.format(userVo.getBirth()) %></label>
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label for="userNm" class="col-sm-2 control-label">이메일</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="email"
-								name="email" placeholder="이메일" value="<%=userVo.getEmail() %>">
+								<label class="control-label" ><%=userVo.getEmail() %></label>
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label for="userNm" class="col-sm-2 control-label">연락처</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="tel"
-								name="tel" placeholder="연락처" value="<%=userVo.getTel() %>">
+								<label class="control-label" ><%=userVo.getTel() %></label>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
-							<button type="submit" class="btn btn-default">사용자 등록</button>
+							<input type="hidden" name="page" value="1">
+							<input type="hidden" name="pageSize" value="10">
+							<input type="button" class="btn btn-default updateClick" value="정보수정" >
+							<button type="submit" class="btn btn-default">목록보기</button>
 						</div>
 					</div>
 				</form>

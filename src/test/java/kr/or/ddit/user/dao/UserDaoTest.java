@@ -2,6 +2,8 @@ package kr.or.ddit.user.dao;
 
 import static org.junit.Assert.*;
 
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import kr.or.ddit.db.SqlFactoryBuilder;
@@ -18,6 +20,7 @@ public class UserDaoTest {
 	private String userId = "brown";
 	private String pass = "brownpass";
 	private IUserDao userDao;
+	private final String TEST_USER_ID = "testUser12";
 	
 	@Before
 	public void before(){
@@ -41,7 +44,7 @@ public class UserDaoTest {
 		System.out.println(userList);
 
 		/*** Then : 결과가 어떠해야하는지 정의 ***/
-		assertEquals(105, userList.size());
+		assertEquals(108, userList.size());
 	}
 
 	@Test
@@ -111,6 +114,66 @@ public class UserDaoTest {
 		System.out.println(userCnt);
 		
 		/*** Then ***/
-		assertEquals(105, userCnt);
+		assertEquals(108, userCnt);
+	}
+	
+//	//이런거 운영DB로 테스트해서는 안된다
+//	@Test
+//	public void insertUserTest(){
+//		/***Given***/
+//		UserVO userVO = new UserVO();
+//		userVO.setUserId(TEST_USER_ID);
+//		userVO.setName("test");
+//		userVO.setPass("test");
+//		userVO.setAddr1("test");
+//		userVO.setAddr2("test");
+//		userVO.setZipcd("test");
+//		GregorianCalendar gc = new GregorianCalendar(2018, 7, 8);
+//		userVO.setBirth(new Date(gc.getTimeInMillis()));
+//		userVO.setEmail("test@test.test");
+//		userVO.setTel("test-test-test");
+//
+//		/***When***/
+//		int insertCnt = userDao.insertUser(userVO);
+//		
+//		/***Then***/
+//		assertEquals(1, insertCnt);
+//	}
+//	
+//	//이런거 운영DB로 테스트해서는 안된다
+//	@Test
+//	public void deleteUSerTest(){
+//		/***Given***/
+//		String userId = TEST_USER_ID;
+//
+//		/***When***/
+//		int deleteCnt = userDao.deleteUser(userId);
+//		
+//		/***Then***/
+//		assertEquals(1, deleteCnt);
+//	}
+	
+	@Test
+	public void updateUserTest(){
+		/***Given***/
+		String test = "updateTest";
+		UserVO userVO = new UserVO();
+		userVO.setUserId("fileTest");
+		userVO.setName(test);
+		userVO.setPass(test);
+		userVO.setAddr1(test);
+		userVO.setAddr2(test);
+		userVO.setEmail(test + "@" + test + ".com");
+		userVO.setZipcd("99999");
+		GregorianCalendar gc = new GregorianCalendar(2018, 10, 10);
+		userVO.setBirth(new Date(gc.getTimeInMillis()));
+		userVO.setTel("111-1111-1111");
+		userVO.setProfile("profile/ddit.png");
+		
+		/***When***/
+		int updateCnt = userDao.updateUser(userVO);
+
+		/***Then***/
+		assertEquals(1, updateCnt);
 	}
 }

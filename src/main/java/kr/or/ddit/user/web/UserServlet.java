@@ -28,7 +28,7 @@ public class UserServlet extends HttpServlet {
 
 		//요청 uri로 로직 분기
 		String uri = request.getRequestURI();
-		System.out.println("userServlet doGet " + uri);
+		System.out.println("userServlet doGet : " + uri);
 		
 		if(uri.equals("/userAllList")){
 			//uri = userAllList
@@ -111,6 +111,7 @@ public class UserServlet extends HttpServlet {
 //		int page = 1;
 		int page = Integer.parseInt(request.getParameter("page"));
 		int pageSize = Integer.parseInt(request.getParameter("pageSize"));
+		
 		
 		PageVO pageVO = new PageVO(page, pageSize);
 		
