@@ -87,7 +87,7 @@ public class LoginServlet extends HttpServlet{
 		if(userVO != null){
 			HttpSession session = req.getSession();
 			
-			session.setAttribute("userVO", userVO);
+			session.setAttribute("S_userVO", userVO);
 			
 			RequestDispatcher rd = req.getRequestDispatcher("main.jsp");
 			rd.forward(req, resp);

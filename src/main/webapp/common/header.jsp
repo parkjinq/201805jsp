@@ -1,10 +1,12 @@
-<%@page import="kr.or.ddit.user.model.UserVO"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="kr.or.ddit.user.model.UserVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
 <% UserVO userVO = (UserVO)session.getAttribute("userVO"); %>
 <%-- <%=userVO.getUserId() %> --%>
-	
+
 	
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container-fluid">
@@ -18,16 +20,11 @@
 				</button>
 				<a class="navbar-brand" href="#">JSP/SPRING
 				
-				<% if(userVO == null){
-					%>
-					 로그인
-					<%
-				} else{
-					%>
-					<%=userVO.getName() + "[" + userVO.getUserId() + "]님 안녕하세요" %>
-					<%
-				}
-				%>
+				<c:choose>
+					<c:when test="${S_userVO.name == null}">로그인</c:when>
+					<c:otherwise>${S_userVO.name}님 안녕하세요</c:otherwise>
+				</c:choose>
+				
 				</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">

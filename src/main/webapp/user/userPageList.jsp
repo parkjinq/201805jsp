@@ -3,6 +3,7 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 
 
@@ -56,13 +57,6 @@
 </form>
 
 <body>
-	<%
-		@SuppressWarnings("unchecked")
-		List<UserVO> userListPage = (List<UserVO>) request.getAttribute("userListPage");
-		PageVO pagination = (PageVO)request.getAttribute("pagination");
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd");
-	%>
-
 	<%@ include file="/common/header.jsp"%>
 
 	<div class="container-fluid">
@@ -84,20 +78,17 @@
 									<th>이름</th>
 									<th>생년월일</th>
 								</tr>
-								<%
-									for (UserVO user : userListPage) {
-								%>
 <%-- 								<tr id="<%=user.getUserId()%>" onclick="javascript:userDetail(<%=user.getUserId()%>)"> --%>
 <%-- 								<tr onclick="javascript:userDetail('<%=user.getUserId()%>')"> --%>
-								<tr class="userClick">
-									<td><%=user.getRnum()%></td>
-									<td><%=user.getUserId()%></td>
-									<td><%=user.getName()%></td>
-									<td><%=formatter.format(user.getBirth())%></td>
-								</tr>
-								<%
-									}
-								%>
+								
+								<c:forEach items="${userListPage }" var="user">
+									<tr class="userClick">
+										<td>${user.rnum}</td>
+										<td>${user.userId }</td>
+										<td>${user.name }</td>
+										<td><fmt:formatDate value="${user.birth }" pattern="yyyy-MM-dd"/></td>
+									</tr>
+								</c:forEach>
 							</table>
 						</div>
 
@@ -109,45 +100,69 @@
 										aria-hidden="true">&laquo;</span>
 								</a></li>
 								<li><a href="/userPageList?page=1&pageSize=10"><<</a></li>
-								<%
-									PageVO currentPage = (PageVO)request.getAttribute("pagination");
+								
+								<%--페이지네이션 jstl화 --%>
+								<c:set var="startIndex" value="0"></c:set>
+								<c:set var="endIndex" value="0"></c:set>
+								<c:set var="pagingNum" value="0"></c:set>
+								<c:set var="userAllNum" value="${pageCnt }"></c:set>
+								
+								<c:choose>
+									<c:when test="${pageCnt != 0}">
+										<c:forEach begin="0" end="${(pagination.page -1)/5 }" varStatus="status">
+											<c:set var="startIndex" value="${(status.index * 5) + 1 }"></c:set>
+											<c:set var="endIndex" value="${startIndex + 4 }"></c:set>
+										</c:forEach>
+										<c:if test="${endIndex > userAllNum }">
+											<c:set var="endIndex" value="${userAllNum }"></c:set>
+										</c:if>
+										
+									</c:when>
+									<c:otherwise>
+										<c:set var="startIndex" value="1"></c:set>
+										<c:set var="endIndex" value="1"></c:set>
+									</c:otherwise>
+								</c:choose>
+<%-- 								<% --%>
+<!-- 									PageVO currentPage = (PageVO)request.getAttribute("pagination"); -->
 									
-									int userAllNum = 0;					//페이지네이션 마지막 숫자(제일 큰수)
-									int startIndex = 0; 				//페이지네이션 시작넘버 1~5 > 1, 6~10 > 6
-									int endIndex = 0;					//5단위 끝자리 1~5 > 5, 6~10 > 10
-									int pagingNum = 0;					//상황에 맞게 startIndex를 이용하여 페이지 이동 버튼 값을 할당
+<!-- 									int userAllNum = 0;					//페이지네이션 마지막 숫자(제일 큰수) -->
+<!-- 									int startIndex = 0; 				//페이지네이션 시작넘버 1~5 > 1, 6~10 > 6 -->
+<!-- 									int endIndex = 0;					//5단위 끝자리 1~5 > 5, 6~10 > 10 -->
+<!-- 									int pagingNum = 0;					//상황에 맞게 startIndex를 이용하여 페이지 이동 버튼 값을 할당 -->
 									
-									//가장 마지막 페이지 구하는 조건문
-// 									userAllNum = userList.size()%10 != 0 ? userList.size() / 10 + 1 : userList.size() / 10;
-									userAllNum = (Integer)request.getAttribute("pageCnt");
+<!-- 									//가장 마지막 페이지 구하는 조건문 -->
+<!-- // 									userAllNum = userList.size()%10 != 0 ? userList.size() / 10 + 1 : userList.size() / 10; -->
+<!-- 									userAllNum = (Integer)request.getAttribute("pageCnt"); -->
 									
-									//페이징 5개씩 나눌때 시작페이지와 끝페이지번호 정하는 조건문
-									if(userAllNum != 0){
-										for(int i = 0; i <= (currentPage.getPage()-1)/5; i++){
-											startIndex = (5*i)+1;
-											endIndex = startIndex + 4;
-										}
-										//페이징에서 필요한 길이(5개중 2개만 필요하면 반복문이 딱 2번만 돌도록 값을 넣어주는 부분)
-										if(endIndex > userAllNum){
-											endIndex = userAllNum;
-										}
-									} else {
-										//반환된 리스트가 없을 경우
-										startIndex = 1;
-										endIndex = 1;
-									}
-									%>
-								<li><a href="/userPageList?page=<%=pagingNum = startIndex == 1 ? 1 : startIndex-5%>&pageSize=10"><</a></li>
-								<%
-									for (int i = startIndex; i <= endIndex; i++) {
-								%>
-								<li><a href="/userPageList?page=<%=i%>&pageSize=10"><%=i%></a></li>
-								<%
-									}
-								%>
-								<li><a href="/userPageList?page=<%=pagingNum = startIndex + 5 > userAllNum ? startIndex : startIndex + 5 %>&pageSize=10">></a></li>
-								<li><a href="/userPageList?page=<%=userAllNum%>&pageSize=10">>></a></li>
-								<li><a href="/userPageList?page=<%=userAllNum%>&pageSize=10"" aria-label="Next"> <span
+<!-- 									//페이징 5개씩 나눌때 시작페이지와 끝페이지번호 정하는 조건문 -->
+<!-- 									if(userAllNum != 0){ -->
+<!-- 										for(int i = 0; i <= (currentPage.getPage()-1)/5; i++){ -->
+<!-- 											startIndex = (5*i)+1; -->
+<!-- 											endIndex = startIndex + 4; -->
+<!-- 										} -->
+<!-- 										//페이징에서 필요한 길이(5개중 2개만 필요하면 반복문이 딱 2번만 돌도록 값을 넣어주는 부분) -->
+<!-- 										if(endIndex > userAllNum){ -->
+<!-- 											endIndex = userAllNum; -->
+<!-- 										} -->
+<!-- 									} else { -->
+<!-- 										//반환된 리스트가 없을 경우 -->
+<!-- 										startIndex = 1; -->
+<!-- 										endIndex = 1; -->
+<!-- 									} -->
+<!-- 									request.setAttribute("startIndex", startIndex); -->
+<!-- 									request.setAttribute("endIndex", endIndex); -->
+<!-- 									request.setAttribute("userAllNum", userAllNum); -->
+<!-- 									%> -->
+								<li><a href="/userPageList?page=${startIndex == 1 ? 1 : startIndex-5}&pageSize=10"><</a></li>
+								
+								<c:forEach begin="${startIndex }" end="${endIndex }" varStatus="status">
+									<li><a href="/userPageList?page=${status.index }&pageSize=10">${status.index }</a></li>
+								</c:forEach>
+
+								<li><a href="/userPageList?page=${startIndex + 5 > userAllNum ? startIndex : startIndex + 5}&pageSize=10">></a></li>
+								<li><a href="/userPageList?page=${userAllNum }&pageSize=10">>></a></li>
+								<li><a href="/userPageList?page=${userAllNum }&pageSize=10"" aria-label="Next"> <span
 										aria-hidden="true">&raquo;</span>
 								</a></li>
 							</ul>

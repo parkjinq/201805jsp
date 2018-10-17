@@ -98,10 +98,6 @@
 </script>
 
 </head>
-<%
-	UserVO userVo = (UserVO) request.getAttribute("userVO");
-	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-%>
 <body>
 
 	<%@ include file="/common/header.jsp"%>
@@ -119,19 +115,16 @@
 					<div class="form-group">
 						<label for="userNm" class="col-sm-2 control-label">사용자 사진</label>
 						<div class="col-sm-10">
-							<%
-								if (userVo.getProfile() != null) {
-							%>
-							<img src="<%=userVo.getProfile()%>" class="kyuseung" />
-							<%
-								} else {
-							%>
-							<img src="/profile/no_image.jpg" class="kyuseung" />
-							<%
-								}
-							%>
+							<c:choose>
+								<c:when test="${userVO.profile == null }" >
+									<img src="/profile/no_image.jpg" class="kyuseung" />
+								</c:when>
+								<c:otherwise>
+									<img src="${userVO.profile }" class="kyuseung" />
+								</c:otherwise>
+							</c:choose>
 							<input type="file" id="profile" name="profile" accept="image/*">
-							<input type="hidden" name="existingProfile" value="<%=userVo.getProfile()%>">
+							<input type="hidden" name="existingProfile" value="${userVO.profile }">
 
 						</div>
 					</div>
@@ -141,7 +134,7 @@
 						<div class="col-sm-10">
 							<input type="text" class="form-control" id="userId" name="userId"
 								readonly="readonly" placeholder="사용자 아이디"
-								value="<%=userVo.getUserId()%>">
+								value="${userVO.userId }">
 						</div>
 					</div>
 
@@ -150,7 +143,7 @@
 							비밀번호</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" id="pass" name="pass"
-								placeholder="사용자 비밀번호" value="<%=userVo.getPass()%>">
+								placeholder="사용자 비밀번호" value="${userVO.pass }">
 						</div>
 					</div>
 
@@ -158,7 +151,7 @@
 						<label for="userNm" class="col-sm-2 control-label">이름</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" id="name" name="name"
-								placeholder="사용자 이름" value="<%=userVo.getName()%>">
+								placeholder="사용자 이름" value="${userVO.name }">
 						</div>
 					</div>
 
@@ -168,7 +161,7 @@
 							<!-- disable이면 값이 안간다, readonly가 적합 -->
 							<input type="text" class="form-control" id="zipcd"
 								readonly="readonly" name="zipcd" placeholder="우편번호"
-								value="<%=userVo.getZipcd()%>">
+								value="${userVO.zipcd }">
 						</div>
 					</div>
 
@@ -184,14 +177,14 @@
 						<div class="col-sm-10">
 							<input type="text" class="form-control" id="addr1" name="addr1"
 								readonly="readonly" placeholder="주소"
-								value="<%=userVo.getAddr1()%>">
+								value="${userVO.addr1 }">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="userNm" class="col-sm-2 control-label">상세주소</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" id="addr2" name="addr2"
-								placeholder="상세주소" value="<%=userVo.getAddr2()%>">
+								placeholder="상세주소" value="${userVO.addr2 }">
 						</div>
 					</div>
 
@@ -201,7 +194,7 @@
 						<div class="col-sm-10">
 							<input type="text" class="form-control" id="birth" name="birth"
 								placeholder="생년월일"
-								value="<%=formatter.format(userVo.getBirth())%>">
+								value='<fmt:formatDate value="${userVO.birth }" pattern="yyyy-MM-dd" />'>
 						</div>
 					</div>
 
@@ -209,7 +202,7 @@
 						<label for="userNm" class="col-sm-2 control-label">이메일</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" id="email" name="email"
-								placeholder="이메일" value="<%=userVo.getEmail()%>">
+								placeholder="이메일" value="${userVO.email }">
 						</div>
 					</div>
 
@@ -217,7 +210,7 @@
 						<label for="userNm" class="col-sm-2 control-label">연락처</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" id="tel" name="tel"
-								placeholder="연락처" value="<%=userVo.getTel()%>">
+								placeholder="연락처" value="${userVO.tel }">
 						</div>
 					</div>
 
