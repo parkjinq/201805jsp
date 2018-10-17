@@ -10,6 +10,7 @@
 	<typeAliases>
 		<typeAlias type="kr.or.ddit.user.model.UserVO" alias="userVo" />
 		<typeAlias type="kr.or.ddit.util.model.PageVO" alias="pageVo" />
+		<typeAlias type="kr.or.ddit.prod.model.ProdVO" alias="prodVo" />
 	</typeAliases>
 
 	<environments default="development">
@@ -33,6 +34,7 @@
 	<mappers>
 		<mapper resource="kr/or/ddit/db/temp.xml" />
 		<mapper resource="kr/or/ddit/db/user.xml" />
+		<mapper resource="kr/or/ddit/db/prod.xml" />
 	</mappers>
 
 </configuration>
