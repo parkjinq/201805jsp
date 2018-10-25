@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import kr.or.ddit.encrypt.sha.KISA_SHA256;
 import kr.or.ddit.user.model.UserVO;
 import kr.or.ddit.user.service.IUserService;
 import kr.or.ddit.user.service.UserService;
@@ -80,10 +81,11 @@ public class LoginServlet extends HttpServlet{
 		//pom.xml에서 orcale dependency scope 삭제
 		UserVO loginInfo = new UserVO();
 		loginInfo.setUserId(userId);
-		loginInfo.setPass(password);
+		String encryptPass = KISA_SHA256.encrypt(password);
+		loginInfo.setPass(encryptPass);
 		
 		UserVO userVO = service.selectUserByVo(loginInfo);
-		
+		userVO.authPass(encryptPass);
 		if(userVO != null){
 			HttpSession session = req.getSession();
 			
