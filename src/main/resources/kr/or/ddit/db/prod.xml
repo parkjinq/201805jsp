@@ -36,5 +36,10 @@
 		ON (lp.lprod_gu = b.buyer_lgu)
 		WHERE p.prod_id = #{prod_id}
 	</select>
+	
+	<select id="selectProdByLgu" parameterType="String" resultType="prodVO">
+		SELECT * FROM prod
+		WHERE	prod_lgu = #{prod_lgu}
+	</select>
 
 </mapper>

@@ -82,10 +82,11 @@ public class LoginServlet extends HttpServlet{
 		UserVO loginInfo = new UserVO();
 		loginInfo.setUserId(userId);
 		String encryptPass = KISA_SHA256.encrypt(password);
-		loginInfo.setPass(encryptPass);
+		loginInfo.setPass(password);
+//		loginInfo.setPass(encryptPass);
 		
 		UserVO userVO = service.selectUserByVo(loginInfo);
-		userVO.authPass(encryptPass);
+//		userVO.authPass(encryptPass);
 		if(userVO != null){
 			HttpSession session = req.getSession();
 			

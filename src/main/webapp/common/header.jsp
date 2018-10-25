@@ -4,10 +4,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<% UserVO userVO = (UserVO)session.getAttribute("userVO"); %>
-<%-- <%=userVO.getUserId() %> --%>
-
-	
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -22,7 +18,15 @@
 				
 				<c:choose>
 					<c:when test="${S_userVO.name == null}">로그인</c:when>
-					<c:otherwise>${S_userVO.name}님 안녕하세요</c:otherwise>
+					<c:otherwise>
+					<fmt:bundle basename="kr.or.ddit.resource.msg.msg">
+						<fmt:message key="hello"></fmt:message>
+						<fmt:message key="visitor">
+							<fmt:param value="${S_userVO.name}"></fmt:param>
+						</fmt:message>
+					</fmt:bundle>
+<%-- 					${S_userVO.name}님 안녕하세요 --%>
+					</c:otherwise>
 				</c:choose>
 				
 				</a>

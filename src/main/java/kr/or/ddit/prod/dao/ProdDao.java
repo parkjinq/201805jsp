@@ -45,4 +45,10 @@ public class ProdDao implements IProdDao{
 		return pdCnt;
 	}
 
+	@Override
+	public List<ProdVO> selectProdByLgu(String prod_lgu) {
+		List<ProdVO> prodList = session.selectList("board.selectProdByLgu", prod_lgu);
+		return prodList;
+	}
+
 }

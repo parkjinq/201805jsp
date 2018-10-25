@@ -15,7 +15,7 @@ import kr.or.ddit.prod.service.IProdService;
 import kr.or.ddit.prod.service.ProdService;
 import kr.or.ddit.util.model.PageVO;
 
-@WebServlet(urlPatterns ={"/prodPageList", "/prodDetail"})
+@WebServlet(urlPatterns ={"/prodPageList", "/prodDetail", "/prodList"})
 public class ProdServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -29,11 +29,26 @@ public class ProdServlet extends HttpServlet {
 			prodPageList(request, response);
 		} else if (uri.equals("/prodDetail")) {
 			prodDetail(request, response);
+		} else if (uri.equals("/prodList")) {
+			prodList(request, response);
 		}
 		
 	}
 	
 	
+
+	private void prodList(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		String prod_lgu = request.getParameter("prod_lgu");
+		
+		List<ProdVO> prodList = service.selectProdByLgu(prod_lgu);
+		
+		request.setAttribute("prodList", prodList);
+		
+		request.getRequestDispatcher("/WEB-INF/tags/code.tag").forward(request, response);
+	}
+
+
 
 	private void prodDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

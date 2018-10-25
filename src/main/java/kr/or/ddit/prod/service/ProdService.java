@@ -50,4 +50,10 @@ public class ProdService implements IProdService {
 		return pdCnt;
 	}
 
+	@Override
+	public List<ProdVO> selectProdByLgu(String prod_lgu) {
+		List<ProdVO> prodList = dao.selectProdByLgu(prod_lgu);
+		return prodList;
+	}
+
 }

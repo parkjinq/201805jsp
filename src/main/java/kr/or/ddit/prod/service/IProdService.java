@@ -39,4 +39,15 @@ public interface IProdService {
 	* Method 설명 : 전체 prod수를 반환하는 메서드
 	 */
 	public int getProdCnt();
+	
+	/**
+	 * 
+	* Method : selectProdByLgu
+	* 작성자 : jin
+	* 변경이력 :
+	* @param prod_lgu
+	* @return
+	* Method 설명 : 해당 prod리스트를 반환하는 메서드
+	 */
+	public List<ProdVO> selectProdByLgu(String prod_lgu);
 }

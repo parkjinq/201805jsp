@@ -8,9 +8,11 @@
 <title>timesTables.jsp</title>
 </head>
 <body>
+			core_import.jsp 변수 param = <%=request.getParameter("number") %>
 	<h2>스크립틀릿</h2>
 <table border="1">
 		<%
+		
 			for (int i = 2; i <= 9; i++) {
 		%>
 		<tr>
@@ -30,7 +32,7 @@
 	<hr>
 	<h2>jstl</h2>
 	<table border="1">
-		<c:forEach begin="2" end="9" var="i">
+		<c:forEach begin="2" end="${param.number}" var="i">
 			<tr>
 				<c:forEach begin="1" end="9" var="j">
 					<td>${i} X ${j} = ${i*j}</td>
