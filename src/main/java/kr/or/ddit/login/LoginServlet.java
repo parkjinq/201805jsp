@@ -22,8 +22,6 @@ public class LoginServlet extends HttpServlet{
 	//service  --> request.getMethod() : "POST", "GET" --> doGet, doPost
 	
 	private static final long serialVersionUID = 1L;
-	private final String USERID = "brown";
-	private final String USERPW = "pass1234";
 	
 	private IUserService service;
 	
@@ -93,6 +91,9 @@ public class LoginServlet extends HttpServlet{
 			session.setAttribute("S_userVO", userVO);
 			
 			RequestDispatcher rd = req.getRequestDispatcher("main.jsp");
+			
+			System.out.println("------------------------------------");
+			
 			rd.forward(req, resp);
 		} else {
 			resp.sendRedirect("login/login.jsp");
