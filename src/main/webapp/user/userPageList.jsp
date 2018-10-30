@@ -41,7 +41,7 @@
 		
 		$(".userClick").on(ev, function() {
 			console.log("document.ready");
-			var userId = $(this).children()[1].innerText;
+			var userId = $(this).children()[1].innerHTML;
 			
 			$("#userId").val(userId);
 			$("#frm").submit();
@@ -84,8 +84,8 @@
 								<c:forEach items="${userListPage }" var="user">
 									<tr class="userClick">
 										<td>${user.rnum}</td>
-										<td>${user.userId }</td>
-										<td>${user.name }</td>
+										<td>${user.userId}</td>
+										<td>${user.name}</td>
 										<td><fmt:formatDate value="${user.birth }" pattern="yyyy-MM-dd"/></td>
 									</tr>
 								</c:forEach>

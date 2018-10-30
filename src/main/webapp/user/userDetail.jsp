@@ -65,6 +65,7 @@
 						<c:choose>
 							<c:when test="${userVO.profile != null }">
 								<img src="${userVO.profile }" class="kyuseung"/>
+								<img src="/fileDownloadServlet?userid=${userVO.userId}" class="kyuseung"/>
 							</c:when>
 							<c:otherwise>
 								<img src="/profile/no_image.jpg" class="kyuseung"/>
